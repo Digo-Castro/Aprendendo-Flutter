@@ -20,14 +20,23 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Despesas Pessoais',
-        ),
+        title: const Text('Despesas Pessoais'),
       ),
-      body: const Center(
-        child: Text(
-          'Versão Inicial',
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: const [
+          SizedBox(
+            child: Card(
+              child: Text('Gráfico'),
+            ),
+          ),
+          SizedBox(
+            child: Card(
+              child: Text('Lista de Transações'),
+            ),
+          ),
+        ],
       ),
     );
   }
