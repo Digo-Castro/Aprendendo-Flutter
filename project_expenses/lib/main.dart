@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_expenses/components/chart.dart';
 import 'package:project_expenses/components/transaction_form.dart';
 
 import 'components/transactions_list.dart';
@@ -11,8 +12,45 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyHomePage(),
+    final Color primaryColor = Colors.green.shade900;
+    final ThemeData themeApp = ThemeData();
+
+    return MaterialApp(
+      home: const MyHomePage(),
+      theme: themeApp.copyWith(
+        colorScheme: themeApp.colorScheme.copyWith(
+          primary: primaryColor,
+          secondary: Colors.amber.shade600,
+        ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontFamily: 'OpenSans',
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        textTheme: TextTheme(
+          titleLarge: TextStyle(
+            fontFamily: 'Quicksand',
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: primaryColor,
+          ),
+          titleMedium: const TextStyle(
+            fontFamily: 'Quicksand',
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+          titleSmall: const TextStyle(
+            fontFamily: 'Quicksand',
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Colors.grey,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -26,29 +64,44 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    Transaction(id: 't1', title: 'Livro', value: 187.56, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Curso', value: 47.50, date: DateTime.now()),
-    Transaction(id: 't3', title: 'Game', value: 19.90, date: DateTime.now()),
     Transaction(
-        id: 't4', title: 'Carro', value: 860000.00, date: DateTime.now()),
+        id: 't1',
+        title: 'Livro',
+        amount: 187.56,
+        date: DateTime.now().subtract(const Duration(days: 3))),
     Transaction(
-        id: 't5',
-        title: 'Apartamento',
-        value: 1900000.90,
-        date: DateTime.now()),
-    Transaction(
-        id: 't6',
-        title: 'Passagem aérea',
-        value: 4700.50,
-        date: DateTime.now()),
-    Transaction(id: 't7', title: 'Game', value: 190.90, date: DateTime.now()),
+        id: 't2',
+        title: 'Curso',
+        amount: 47.50,
+        date: DateTime.now().subtract(const Duration(days: 2))),
+    Transaction(id: 't3', title: 'Game', amount: 19.90, date: DateTime.now().subtract(const Duration(days: 1))),
+    // Transaction(
+    //     id: 't4', title: 'Carro', amount: 860000.00, date: DateTime.now()),
+    // Transaction(
+    //     id: 't5',
+    //     title: 'Apartamento',
+    //     amount: 1900000.90,
+    //     date: DateTime.now()),
+    // Transaction(
+    //     id: 't6',
+    //     title: 'Passagem aérea',
+    //     amount: 4700.50,
+    //     date: DateTime.now()),
+    // Transaction(id: 't7', title: 'Game', amount: 190.90, date: DateTime.now()),
   ];
 
-  void _addTransaction(String title, double value) {
+  List<Transaction> get _recentTransactions {
+    return _transactions
+        .where((trans) => trans.date
+            .isAfter(DateTime.now().subtract(const Duration(days: 7))))
+        .toList();
+  }
+
+  void _addTransaction(String title, double amount) {
     final newTransaction = Transaction(
       id: UniqueKey().toString(),
       title: title,
-      value: value,
+      amount: amount,
       date: DateTime.now(),
     );
     setState(() {
@@ -80,12 +133,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(
-              child: Card(
-                child: Text('Gráfico'),
-              ),
+            Chart(
+              recentTransactions: _transactions,
             ),
-            TransactionsList(transactions: _transactions),
+            TransactionsList(transactions: _recentTransactions),
           ],
         ),
       ),

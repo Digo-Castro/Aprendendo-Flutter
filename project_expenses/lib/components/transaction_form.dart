@@ -48,10 +48,10 @@ class _TransactionFormState extends State<TransactionForm> {
                 )),
             TextButton(
                 onPressed: _submitForm,
-                child: const Text(
+                child: Text(
                   'Nova Transação',
                   style: TextStyle(
-                    color: Color.fromARGB(255, 123, 31, 162),
+                    color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
                   ),

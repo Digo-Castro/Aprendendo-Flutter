@@ -10,18 +10,42 @@ class TransactionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 360,
-      child: ListView.builder(
-          itemCount: transactions.length,
-          itemBuilder: (context, index) {
-            final trans = transactions[index];
-            return Card(
-                child: TransactionCard(
-              price: trans.value,
-              title: trans.title,
-              date: trans.date,
-            ));
-          }),
+      height: 370,
+      child: transactions.isEmpty
+          ? Column(
+              children: [
+                Container(
+                  height: 200,
+                  margin: const EdgeInsets.all(50),
+                  padding: const EdgeInsets.all(20),
+                  child: Image.asset(
+                    'assets/images/money_640.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Text(
+                  'Nunhuma Transação Cadastrada',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ],
+            )
+          : ListView.builder(
+              itemCount: transactions.length,
+              itemBuilder: (context, index) {
+                final trans = transactions[index];
+                return Card(
+                  elevation: 5,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 5,
+                  ),
+                  child: TransactionCard(
+                  amount: trans.amount,
+                  title: trans.title,
+                  date: trans.date,
+                  ),
+                );
+              }),
     );
   }
 }
