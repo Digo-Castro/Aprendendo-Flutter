@@ -49,6 +49,12 @@ class ExpensesApp extends StatelessWidget {
             fontStyle: FontStyle.italic,
             color: Colors.grey,
           ),
+          labelLarge: const TextStyle(
+            color: Colors.white,
+            fontFamily: 'Quicksand',
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
         ),
       ),
     );
@@ -63,32 +69,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    Transaction(
-        id: 't1',
-        title: 'Livro',
-        amount: 187.56,
-        date: DateTime.now().subtract(const Duration(days: 3))),
-    Transaction(
-        id: 't2',
-        title: 'Curso',
-        amount: 47.50,
-        date: DateTime.now().subtract(const Duration(days: 2))),
-    Transaction(id: 't3', title: 'Game', amount: 19.90, date: DateTime.now().subtract(const Duration(days: 1))),
-    // Transaction(
-    //     id: 't4', title: 'Carro', amount: 860000.00, date: DateTime.now()),
-    // Transaction(
-    //     id: 't5',
-    //     title: 'Apartamento',
-    //     amount: 1900000.90,
-    //     date: DateTime.now()),
-    // Transaction(
-    //     id: 't6',
-    //     title: 'Passagem aérea',
-    //     amount: 4700.50,
-    //     date: DateTime.now()),
-    // Transaction(id: 't7', title: 'Game', amount: 190.90, date: DateTime.now()),
-  ];
+  final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
     return _transactions
@@ -97,12 +78,12 @@ class _MyHomePageState extends State<MyHomePage> {
         .toList();
   }
 
-  void _addTransaction(String title, double amount) {
+  void _addTransaction(String title, double amount, DateTime date) {
     final newTransaction = Transaction(
       id: UniqueKey().toString(),
       title: title,
       amount: amount,
-      date: DateTime.now(),
+      date: date,
     );
     setState(() {
       _transactions.add(newTransaction);
