@@ -70,7 +70,6 @@ class _TransactionFormState extends State<TransactionForm> {
                 child: Row(
                   children: [
                     Text(
-                      _selectedDate == null ? 'Nenhuma Data Selecionada' :
                       DateFormat('d MMM y').format(_selectedDate!),
                       style: Theme.of(context).textTheme.titleSmall,
                     ),

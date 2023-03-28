@@ -3,9 +3,11 @@ import 'package:project_expenses/components/transaction_card.dart';
 import '../models/transaction.dart';
 
 class TransactionsList extends StatelessWidget {
-  const TransactionsList({super.key, required this.transactions});
+  const TransactionsList(
+      {super.key, required this.transactions, required this.onRemove});
 
   final List<Transaction> transactions;
+  final Function(String) onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +41,8 @@ class TransactionsList extends StatelessWidget {
                     vertical: 8,
                     horizontal: 5,
                   ),
-                  child: TransactionCard(
-                  amount: trans.amount,
-                  title: trans.title,
-                  date: trans.date,
-                  ),
+                  child:
+                      TransactionCard(transaction: trans, onRemove: onRemove),
                 );
               }),
     );
